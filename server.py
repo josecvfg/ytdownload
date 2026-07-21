@@ -185,6 +185,14 @@ def vtt_to_clean_srt(vtt_path: Path) -> Path:
     srt_path.write_text("\n".join(srt_lines), encoding="utf-8")
     return srt_path
 
+COOKIES_FILE = BASE_DIR / "cookies.txt"
+
+def base_ydl_opts() -> dict:
+    opts = {"quiet": True, "no_warnings": True}
+    if COOKIES_FILE.exists():
+        opts["cookiefile"] = str(COOKIES_FILE)
+    return opts
+
 
 def run_download(job: Job):
     job.status = "downloading"
@@ -212,6 +220,7 @@ def run_download(job: Job):
             job.message = "Descarga completa, preparando subtítulos"
 
     ydl_opts = {
+        **base_ydl_opts(),
         "format": "bestvideo[height<=720]+bestaudio/best[height<=720]",
         "outtmpl": outtmpl,
         "merge_output_format": "mp4",
