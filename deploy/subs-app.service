@@ -1,0 +1,14 @@
+[Unit]
+Description=subs-burner (FastAPI + yt-dlp + ffmpeg)
+After=network.target
+
+[Service]
+User=subsapp
+WorkingDirectory=/opt/subs-burner
+ExecStart=/opt/subs-burner/venv/bin/uvicorn server:app --host 127.0.0.1 --port 8000
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
