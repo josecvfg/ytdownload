@@ -198,7 +198,7 @@ def run_download(job: Job):
     job.status = "downloading"
     job.message = "Obteniendo información del video"
 
-    with yt_dlp.YoutubeDL({"quiet": True, "no_warnings": True, "skip_download": True}) as ydl:
+    with yt_dlp.YoutubeDL({**base_ydl_opts(), "skip_download": True}) as ydl:
         info = ydl.extract_info(job.url, download=False)
 
     job.title = sanitize_filename(info.get("title", "video"))
@@ -224,8 +224,6 @@ def run_download(job: Job):
         "format": "bestvideo[height<=720]+bestaudio/best[height<=720]",
         "outtmpl": outtmpl,
         "merge_output_format": "mp4",
-        "quiet": True,
-        "no_warnings": True,
         "progress_hooks": [hook],
     }
 
