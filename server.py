@@ -212,7 +212,7 @@ def run_download(job: Job):
             job.message = "Descarga completa, preparando subtítulos"
 
     ydl_opts = {
-        "format": "bestvideo[height<=1080]+bestaudio/best[height<=1080]",
+        "format": "bestvideo[height<=720]+bestaudio/best[height<=720]",
         "outtmpl": outtmpl,
         "merge_output_format": "mp4",
         "quiet": True,
